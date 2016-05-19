@@ -1,0 +1,578 @@
+head	1.25;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.25
+date	2014.03.12.22.52.07;	author -;	state -;
+branches;
+next	1.24;
+
+1.24
+date	2014.03.12.22.37.33;	author -;	state -;
+branches;
+next	1.23;
+
+1.23
+date	2014.03.12.16.47.41;	author -;	state -;
+branches;
+next	1.22;
+
+1.22
+date	2014.03.12.16.45.12;	author -;	state -;
+branches;
+next	1.21;
+
+1.21
+date	2014.03.12.16.44.44;	author -;	state -;
+branches;
+next	1.20;
+
+1.20
+date	2014.03.12.16.44.18;	author -;	state -;
+branches;
+next	1.19;
+
+1.19
+date	2014.03.12.16.43.19;	author -;	state -;
+branches;
+next	1.18;
+
+1.18
+date	2014.03.12.16.42.34;	author -;	state -;
+branches;
+next	1.17;
+
+1.17
+date	2014.03.12.16.42.10;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2014.03.12.16.37.53;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2014.03.12.16.36.59;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2014.03.12.00.51.21;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2014.03.12.00.47.01;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2014.03.12.00.44.43;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2014.03.12.00.43.06;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2014.03.12.00.41.29;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2014.03.12.00.36.31;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2014.03.12.00.35.55;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2014.03.12.00.34.24;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2014.03.12.00.29.46;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2014.03.10.20.54.19;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2014.03.10.20.52.09;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2014.03.10.20.51.25;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.03.10.20.49.08;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.03.10.20.48.30;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.25
+log
+@-
+@
+text
+@// $Id: numsort.c,v 1.24 2014-03-12 15:37:33-07 - - $
+
+// NAME
+//    Numsort - sorts numbers from stdin
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#include "inssort.h"
+
+int exit_status = EXIT_SUCCESS;
+
+int doucmp (const void *this, const void *that){
+  double *thisdouble = (double*) this;
+  double *thatdouble = (double*) that;
+  return (*thisdouble > *thatdouble) - (*thisdouble < *thatdouble);
+}
+
+int main () {
+  double array[1000];
+  int x;
+  for (x=0; x < 999; ++x) {
+    int scancount = scanf ("%lg", &array[x]);
+    if (scancount == EOF) {
+      printf ("EOF\n");
+      break;
+    }else if (scancount == 1) {
+      printf ("number = %.15g\n",array[x]);
+    }else {
+      printf ("bad number\n");
+      break;
+    };
+  }
+
+  // qsort (&array[0], x, sizeof (double *), doucmp);
+  inssort(array, x, sizeof (double *), doucmp);
+
+  for (int i = 0; i < x; ++i) {
+    printf ("%20.15g\n",array[i]);
+  }
+  return exit_status;
+}
+@
+
+
+1.24
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.23 2014-03-12 09:47:41-07 - - $
+d20 1
+a20 1
+int main (int argc, char **argv) {
+@
+
+
+1.23
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.22 2014-03-12 09:45:12-07 - - $
+d10 2
+d36 2
+a37 1
+  qsort (&array[0], x, sizeof (double *), doucmp);
+@
+
+
+1.22
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.21 2014-03-12 09:44:44-07 - - $
+d22 10
+a31 1
+    scanf ("%lg", &array[x]);
+@
+
+
+1.21
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.20 2014-03-12 09:44:18-07 - - $
+d20 2
+a21 1
+  for (int x=0; x < 999; ++x) {
+@
+
+
+1.20
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.19 2014-03-12 09:43:19-07 - - $
+d21 1
+a21 1
+    scanf ("%lg", array[x]);
+@
+
+
+1.19
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.18 2014-03-12 09:42:34-07 - - $
+d19 2
+a20 2
+  double array[1000], x;
+  for (x=0; x < 999; ++x) {
+@
+
+
+1.18
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.17 2014-03-12 09:42:10-07 - - $
+d21 1
+a21 9
+    int scancount = scanf ("%lg", array[x]);
+    if (scancount == EOF) {
+      printf ("EOF\n");
+      break;
+    }else if (scancount == 1) {
+      printf ("number = %lg\n",&array[x]);
+    }else {
+      printf ("bad number\n");
+    };
+d23 1
+@
+
+
+1.17
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.16 2014-03-12 09:37:53-07 - - $
+d21 1
+a21 1
+    int scancount = scanf ("%lg", &array[x]);
+@
+
+
+1.16
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.15 2014-03-12 09:36:59-07 - - $
+d21 3
+a23 1
+    if (scanf ("%f",&array[x]) != 1) {
+d25 5
+a29 1
+    }
+d31 1
+a31 1
+  qsort (&array[0], x, sizeof (double *); doucmp);
+@
+
+
+1.15
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.14 2014-03-11 17:51:21-07 - - $
+a9 2
+#include "inssort.h"
+
+@
+
+
+1.14
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.13 2014-03-11 17:47:01-07 - - $
+d14 1
+a14 1
+int doublecmp (const void *this, const void *that){
+d21 3
+a23 7
+  double array[1000];
+
+  for (int index=0 ;; ++index) {
+    double number;
+    int scancount = scanf ("%lg", &number);
+    if (scancount == EOF) {
+      printf ("END OF FILE\n");
+d25 3
+a27 11
+    }else if (scancount == 1) {
+      array[index]= number;
+    }else {
+      printf ("BAD NUMBER\n");
+      break;
+    };
+  };
+
+  if (array == NULL) return EXIT_FAILURE;
+
+  const size_t nelem = sizeof array;
+d29 2
+a30 5
+  // Pass numbers to inssort
+  qsort (array, nelem, sizeof *array, doublecmp);
+  // Print numbers
+  for (size_t itor = 0; itor < nelem; ++itor) {
+    printf ("%20.15g\n", array[itor]);
+@
+
+
+1.13
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.12 2014-03-11 17:44:43-07 - - $
+d23 1
+a23 1
+  for (;;) {
+d30 1
+a30 1
+      array[scancount]= number;
+a34 2
+    printf ("%i\n", scancount);
+    printf ("%g\n",array[scancount]);
+d38 2
+a39 1
+  const size_t nelem = sizeof array / sizeof *array;
+@
+
+
+1.12
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.11 2014-03-11 17:43:06-07 - - $
+d35 2
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.10 2014-03-11 17:41:29-07 - - $
+d33 1
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.9 2014-03-11 17:36:31-07 - - $
+a21 1
+  printf ("%g\n",array[0]);
+a25 4
+    if (array[999] != 0) {
+      printf ("Array is Full\n");
+      break;
+    }
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.8 2014-03-11 17:35:55-07 - - $
+d22 1
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.7 2014-03-11 17:34:24-07 - - $
+d40 1
+a40 1
+  if (array[0] == NULL) return EXIT_FAILURE;
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.6 2014-03-11 17:29:46-07 - - $
+a36 2
+      exit_status = EXIT_FAILURE;
+      return exit_status;
+d39 2
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.5 2014-03-10 13:54:19-07 - - $
+d37 2
+a38 1
+      break;
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.4 2014-03-10 13:52:09-07 - - $
+d48 1
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.3 2014-03-10 13:51:25-07 - - $
+d46 1
+a46 1
+    printf ("20.15g\n", array[itor]);
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.2 2014-03-10 13:49:08-07 - - $
+d26 1
+a26 1
+    if (array[999] != NULL) {
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: numsort.c,v 1.1 2014-03-10 13:48:30-07 - - $
+a35 1
+      assert (scancount == 1);
+d43 1
+a43 1
+  qsort (array, nelem, sizeof *array, intcmp);
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id$
+a21 4
+  char err_buffer [256];
+  char err_buf-fmt[16];
+  sprintf (err_buf_fmt, "%%%lds", sizeof err_buffer - 1);
+  printf ("err_buf_fmt = \"%s\"\n", err_buf_fmt);
+@

@@ -1,0 +1,82 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.2
+date	2014.01.07.20.29.29;	author vispatel;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.01.07.20.13.25;	author vispatel;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@-
+@
+text
+@// USER: Viraj Patel (vispatel@@ucsc.edu)
+//
+// NAME
+//    hello - a verbose version of the classical "Hello World" program.
+//
+// SYNOPSIS
+//    hello
+//
+// DESCRIPTION
+//    Introduces itself and its enviroment
+//    
+
+import java.util.ArrayList;
+import java.util.List;
+import static java.lang.System.*;
+class hello {
+    static void printprop (String format, String properties){
+	List<Object> property_values = new ArrayList<Object>();
+	for (String property : properties) {
+	    property_values.add (getProperty (property));
+	}
+	out.printf (format, property_values.toArray());
+    }
+    public static void main (String[] args){
+	double memory = Runtime.getRuntime().freeMemory();
+	long now = currentTimeMillis();
+	out.printf("Hello, World!%n");
+	printprop ("Class path is%n%s%n", "java.class.path");
+	printprop ("Operating System is %s-bit %s-endian %s %s %s%n",
+		   "sun.arch.data.model", "sun.cpu.endian",
+		   "os.arch", "os.name", "os.version");
+	printprop ("Runtime is %s (%s)%n", "java.runtime.name", "java.runtime.version");
+	printprop ("Virtual Machine is %s (%s)%n", "java.vm.name", "java.vm.version");
+	printprop ("Home is %s (%s)%n", "java.home", "java.version");
+	out.printf ("There are %.0f bytes = %.4f Mbytes free memory%n", memory, memory / (1<<20));
+	out.printf ("Time is now %.3f seconds = %tc%n", now /1e3, now);
+    }
+}@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// Program/filename: hello.java, v1.0 2014-01-07 08:54
+d3 9
+a11 4
+// Name
+//     hello
+// Description
+//     Prints Hello World
+@

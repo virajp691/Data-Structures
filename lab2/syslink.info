@@ -1,0 +1,8 @@
+lrwxr-xr-x. 1 vispatel users 72 Jan 15 10:06 lab2 -> /afs/cats.ucsc.edu/users/j/vispatel/12b/Labs-cmps012m/lab2u-unix-shells/
+  File: `lab2' -> `/afs/cats.ucsc.edu/users/j/vispatel/12b/Labs-cmps012m/lab2u-unix-shells/'
+  Size: 72        	Blocks: 2          IO Block: 4096   symbolic link
+Device: 16h/22d	Inode: 901906508   Links: 1
+Access: (0755/lrwxr-xr-x)  Uid: (56424/vispatel)   Gid: (  101/   users)
+Access: 2014-01-15 10:06:06.000000000 -0800
+Modify: 2014-01-15 10:06:06.000000001 -0800
+Change: 2014-01-15 10:06:06.000000000 -0800

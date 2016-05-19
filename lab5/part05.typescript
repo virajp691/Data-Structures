@@ -1,0 +1,68 @@
+Script started on Wed 19 Feb 2014 05:14:59 PM PST
+You are currently using 0% (281.0 KiB) of your 488.3 MiB quota.
+]0;vispatel@unix2:lab5[vispatel@unix2 lab5]$ mk list1.c
+CSOURCE=list1.c EXECBIN=list1
++ cid + list1.c
++ checksource list1.c
++ gcc -g -O0 -Wall -Wextra -std=gnu99 list1.c -o list1 -lm
+list1.c: In function ‘main’:
+list1.c:15:7: warning: implicit declaration of function ‘malloc’ [-Wimplicit-function-declaration]
+       node *node = malloc (sizeof (struct node));
+       ^
+list1.c:15:20: warning: incompatible implicit declaration of built-in function ‘malloc’ [enabled by default]
+       node *node = malloc (sizeof (struct node));
+                    ^
+list1.c:12:15: warning: unused parameter ‘argc’ [-Wunused-parameter]
+ int main (int argc, char **argv) {
+               ^
++ set +x
+============================================================
+]0;vispatel@unix2:lab5[vispatel@unix2 lab5]$ man mallor [Kc 3
+[?1049h[?1h=MALLOC(3)                  Linux Programmer’s Manual                 MALLOC( 3)
+
+[1mNAME[0m
+       calloc,  malloc,  free,  realloc  - Allocate and free dynamic
+       memory
+
+[1mSYNOPSIS[0m
+       [1m#include[0m [1m<stdlib.h>[0m
+
+       [1mvoid[0m [1m*calloc(size_t[0m [4mnmemb[24m[1m,[0m [1msize_t[0m [4msize[24m[1m);[0m
+       [1mvoid[0m [1m*malloc(size_t[0m [4msize[24m[1m);[0m
+       [1mvoid[0m [1mfree(void[0m [4m*ptr[24m[1m);[0m
+       [1mvoid[0m [1m*realloc(void[0m [4m*ptr[24m[1m,[0m [1msize_t[0m [4msize[24m[1m);[0m
+
+[1mDESCRIPTION[0m
+       [1mcalloc[0m() allocates memory for an array of [4mnmemb[24m  elements  of
+       [4msize[24m  bytes  each and returns a pointer to the allocated mem-
+       ory.  The memory is set to zero.  If [4mnmemb[24m or [4msize[24m is 0, then
+       [1mcalloc[0m()  returns either NULL, or a unique pointer value that
+       can later be successfully passed to [1mfree[0m().
+
+       [1mmalloc[0m() allocates [4msize[24m bytes and returns a  pointer  to  the
+       allocated  memory.  The memory is not cleared.  If [4msize[24m is 0,
+       then [1mmalloc[0m() returns either NULL, or a unique pointer  value
+       that can later be successfully passed to [1mfree[0m().
+
+       [1mfree[0m()  frees  the memory space pointed to by [4mptr[24m, which must
+       have been returned by a previous call to  [1mmalloc[0m(),  [1mcalloc[0m()
+       or  [1mrealloc[0m().   Otherwise,  or if [4mfree(ptr)[24m has already been
+       called before, undefined behavior occurs.  If [4mptr[24m is NULL, no
+       operation is performed.
+
+       [1mrealloc[0m()  changes the size of the memory block pointed to by
+       [4mptr[24m to [4msize[24m bytes.  The contents will  be  unchanged  to  the
+       minimum of the old and new sizes; newly allocated memory will
+       be uninitialized.  If [4mptr[24m is NULL, then the call  is  equiva-
+       lent  to  [4mmalloc(size)[24m,  for  all  values of [4msize[24m; if [4msize[24m is
+       equal to zero, and [4mptr[24m is not NULL, then the call is  equiva-
+       lent  to  [4mfree(ptr)[24m.   Unless  [4mptr[24m is NULL, it must have been
+       returned by an earlier call to [1mmalloc[0m(),  [1mcalloc[0m()  or  [1mreal-[0m
+       [1mloc[0m().   If  the  area  pointed  to was moved, a [4mfree(ptr)[24m is
+       done.
+
+:[K[K[?1l>[?1049lNo manual entry for 3
+]0;vispatel@unix2:lab5[vispatel@unix2 lab5]$ exit
+exit
+
+Script done on Wed 19 Feb 2014 05:15:47 PM PST

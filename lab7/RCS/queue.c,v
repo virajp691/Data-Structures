@@ -1,0 +1,183 @@
+head	1.6;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.6
+date	2014.02.27.05.27.06;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2014.02.26.18.58.32;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2014.02.26.18.57.49;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2014.02.26.18.51.56;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.02.26.18.50.04;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.02.25.20.13.48;	author vispatel;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@-
+@
+text
+@// $Id: queue.c,v 1.5 2014-02-26 10:58:32-08 - - $
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "queue.h"
+
+#define STUBPRINTF(...) fprintf (stderr, __VA_ARGS__);
+
+typedef struct queue_node queue_node;
+struct queue_node {
+   queue_item_t item;
+   queue_node *link;
+};
+
+struct queue {
+   queue_node *front;
+   queue_node *rear;
+};
+
+queue *new_queue (void) {
+  queue *this = malloc (sizeof (struct queue));
+  assert (this != NULL);
+  return this;
+}
+
+void free_queue (queue *this) {
+   assert (isempty_queue (this));
+   free (this);
+}
+
+void insert_queue (queue *this, queue_item_t item) {
+  queue_node *tmp = malloc (sizeof (queue_node));
+  assert (tmp!=NULL);
+  tmp->item=item;
+  tmp->link = this->front;
+  this->front = tmp;  
+}
+
+queue_item_t remove_queue (queue *this) {
+   assert (! isempty_queue (this));
+   queue_item_t result = this->front->item;
+   this->front->item = NULL;
+   this->front = this->front->link;
+   
+   return result;
+}
+
+bool isempty_queue (queue *this) {
+   return this->front == NULL;
+}
+
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: queue.c,v 1.4 2014-02-26 10:57:49-08 - - $
+d24 3
+a26 3
+  queue *newqueue = malloc (sizeof (struct queue));
+  assert(newqueue != NULL);
+  return newqueue;
+d47 1
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: queue.c,v 1.3 2014-02-26 10:51:56-08 - - $
+d26 1
+a26 1
+  return queue;
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: queue.c,v 1.2 2014-02-26 10:50:04-08 - - $
+d24 3
+a26 1
+  return new_queue ();
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: queue.c,v 1.1 2014-02-25 12:13:48-08 vispatel - $
+d42 1
+a42 1
+   queue_item_t *result = this->front->item;
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: queue.c,v 1.9 2013-05-01 13:22:44-07 - - $
+d24 1
+a24 2
+   STUBPRINTF ("return NULL\n");
+   return NULL;
+d33 5
+a37 1
+   STUBPRINTF ("item =\n\t\"%s\"\n", item);
+d42 4
+a45 2
+   STUBPRINTF ("return NULL\n");
+   return NULL;
+@

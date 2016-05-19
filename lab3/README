@@ -1,0 +1,19 @@
+NAME: Viraj Patel
+USER: vispatel@ucsc.edu
+Hostname: unix1.lt.ucsc.edu
+
+SKELETON CODE:
+/courses/cmps012b-wm/Labs-cmps012m/
+lab3c-rpnstack-array/crpn.c
+
+JAVA CODE:
+/courses/cmps012b-wm/Labs-cmps012m/
+lab3c-rpnstack-array/jrpn.java
+
+Converted missing code from jrpn.java
+to the C programming language.
+Commented out the printf statements.
+I would put instructions but because
+I don't know C that well or the program
+that well I felt it was best not to mess
+with the program.

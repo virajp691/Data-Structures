@@ -1,0 +1,466 @@
+head	1.17;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.17
+date	2014.03.05.06.38.27;	author -;	state -;
+branches;
+next	1.16;
+
+1.16
+date	2014.03.05.06.38.04;	author -;	state -;
+branches;
+next	1.15;
+
+1.15
+date	2014.03.05.06.32.22;	author -;	state -;
+branches;
+next	1.14;
+
+1.14
+date	2014.03.05.06.31.21;	author -;	state -;
+branches;
+next	1.13;
+
+1.13
+date	2014.03.05.02.05.12;	author -;	state -;
+branches;
+next	1.12;
+
+1.12
+date	2014.03.05.01.55.10;	author -;	state -;
+branches;
+next	1.11;
+
+1.11
+date	2014.03.05.01.52.31;	author -;	state -;
+branches;
+next	1.10;
+
+1.10
+date	2014.03.05.01.48.28;	author -;	state -;
+branches;
+next	1.9;
+
+1.9
+date	2014.03.05.01.46.22;	author -;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2014.03.05.01.45.51;	author -;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2014.03.05.01.43.39;	author -;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2014.03.05.01.42.53;	author -;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2014.03.05.01.40.00;	author -;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2014.03.04.22.33.21;	author -;	state -;
+branches;
+next	1.3;
+
+1.3
+date	2014.03.04.22.31.58;	author -;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.03.04.22.31.07;	author -;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.03.04.22.30.31;	author -;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@-
+@
+text
+@// $Id: l8stat.c,v 1.16 2014-03-04 22:38:04-08 - - $
+// USER
+//    Viraj Patel (Vispatel@@ucsc.edu)
+
+// NAME
+//    l8stat - stat a list of files
+
+// SYNOPSIS
+//    l8stat [filename...]
+
+#include <limits.h>
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+int exit_status = EXIT_SUCCESS;
+char *program_name = NULL;
+#define STD_DIR "."
+
+void scan_file (char *filename) {
+  //Create a variable for the structure for file stats
+  struct stat sb;
+
+  // Run lstat and store struct into 'sb' also check if fail
+  if (lstat(filename, &sb) == -1) {
+    exit_status = EXIT_FAILURE;
+    fflush (NULL);
+    fprintf (stderr, "Could not lstat file %s\n", filename);
+    fflush (NULL);
+  }else {
+    // If lstat was sucessful run all this
+    // Print the basic information about the file
+    printf ("Filename: %s\n",filename);
+    printf ("File Size:         %lld bytes\n",
+	    (long long)sb.st_size);
+    printf ("File Mode:        %lo(octal)\n",
+	    (unsigned long) sb.st_mode);
+
+    // Check if it is a systemlink and print the req info
+    char sysbuff[128];
+    if (readlink(filename, sysbuff, sizeof (sysbuff))!= -1) {
+      printf ("System Link Value: %s\n", sysbuff);
+    }
+
+    // Store the timestamp into a usable time structure
+    struct tm *filetime = localtime (&sb.st_mtime);
+    time_t currtime;
+    time (&currtime); // Get/stores current time
+    char tbuf[128]; // buffer will become time string
+
+    if (currtime - sb.st_mtime > 180){
+    // Run strftime to store the timestamp into a string
+    if (strftime (tbuf, sizeof (tbuf), "%b %e %R", filetime)==0){
+      exit_status = EXIT_FAILURE;
+      fflush(NULL);
+      fprintf (stderr, "Failed to convert time\n");
+      fflush(NULL);
+    }
+    }else {
+      if (strftime (tbuf, sizeof (tbuf), "%b %e  %Y", filetime)==0){
+	exit_status = EXIT_FAILURE;
+        fflush(NULL);
+      }
+    }
+    // print timestamp
+    printf ("Last Modifed: %s\n", tbuf);
+  }
+
+  
+}
+
+int main (int argc, char **argv) {
+  if (argc == 1) {
+    // Use current directory
+  }else {
+    for (int argi = 1; argi < argc; ++argi) {
+      char *filename = argv[argi];
+      FILE *input = fopen (filename, "r");
+      if (input != NULL) {
+        scan_file (filename);
+        fclose (input);
+      }else {
+        exit_status = EXIT_FAILURE;
+        fflush (NULL);
+        fprintf (stderr, "%s FILE DOES NOT EXIT\n", filename);
+        fflush (NULL);
+      }
+    }
+  }
+
+  return exit_status;
+}
+@
+
+
+1.16
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.15 2014-03-04 22:32:22-08 - - $
+d70 1
+a70 1
+    printf ("Last Modifed: %s\n", buf);
+@
+
+
+1.15
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.14 2014-03-04 22:31:21-08 - - $
+a53 3
+    char cbuf[128];
+    strftime (cbuf, sizeof (cbuf), "%b %e %R", currtime);
+    printf ("%s\n", cbuf);
+d55 1
+d63 6
+@
+
+
+1.14
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.13 2014-03-04 18:05:12-08 - - $
+d55 2
+a56 2
+    printf ("%s\n",strftime (cbuf, sizeof (cbuf), "%b %e %R", currtime));
+
+@
+
+
+1.13
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.12 2014-03-04 17:55:10-08 - - $
+d25 1
+d27 2
+d35 2
+d42 18
+a59 3
+    struct tm *time = localtime (&sb.st_mtime);
+    char buf[127];
+    if (strftime (buf, sizeof (buf), "%b %e %R", time)==0){
+d65 1
+@
+
+
+1.12
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.11 2014-03-04 17:52:31-08 - - $
+d37 9
+a45 1
+    printf ("Last modifed Modifed: %s", localtime(&sb.st_mtime));
+@
+
+
+1.11
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.10 2014-03-04 17:48:28-08 - - $
+d37 1
+a37 1
+    printf ("Last modifed Modifed: %s", ctime(&sb.st_mtime));
+a43 1
+  program_name = basename (argv[0]);
+@
+
+
+1.10
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.9 2014-03-04 17:46:22-08 - - $
+d37 1
+d39 1
+a40 11
+  char buf[30];
+  if (readlink (filename, buf, sizeof (buf)) != -1){
+
+  }
+
+  // time_t currTime = time (sb.st_mtime);
+  /* printf ("Time: %d/%d %d:%d:%d",
+	  time.tm_mon, time.tm_mday,
+	  time.tm_hour, time.tm_min,
+	  time.tm_sec);
+  */
+@
+
+
+1.9
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.8 2014-03-04 17:45:51-08 - - $
+d44 1
+a44 1
+  time_t currTime = time (sb.st_mtime);
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.7 2014-03-04 17:43:39-08 - - $
+d45 1
+a45 1
+  printf ("Time: %d/%d %d:%d:%d",
+d49 1
+a49 1
+
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.6 2014-03-04 17:42:53-08 - - $
+d44 1
+a44 2
+  struct tm time;
+  localtime (sb.st_mtime, &time);
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.5 2014-03-04 17:40:00-08 - - $
+d45 1
+a45 1
+  localtime (sb.st_mtime, time);
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.4 2014-03-04 14:33:21-08 - - $
+a43 1
+  time_t t = time (sb.st_mtime);
+d45 1
+a45 1
+  localtime (t, time);
+@
+
+
+1.4
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.3 2014-03-04 14:31:58-08 - - $
+d33 1
+a33 1
+    printf ("File Size:       %lld bytes\n",
+d35 2
+d38 14
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.2 2014-03-04 14:31:07-08 - - $
+a36 10
+    
+
+
+  // Check if filename is a symoblic link
+
+  printf ("FILENAME: %s\n",filename);
+  print_file_mode (filename);
+  print_file_size (filename);
+  print_file_mtime (filename);
+}
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: l8stat.c,v 1.1 2014-03-04 14:30:31-08 - - $
+d34 1
+a34 1
+	    (long long)sb->st_size);
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id$
+a23 6
+struct stat {
+  st_mode mode;
+  st_size size;
+  st_mtime mtime;
+};
+
+@

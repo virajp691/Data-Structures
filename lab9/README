@@ -1,0 +1,5 @@
+Viraj Patel (vispatel@ucsc.edu)
+Hostname: unix.lt.ucsc.edu
+Prog Name: numsort and linesort
+Included files: numsort.c linesort.c inssort.h inssort.c
+Bugs: May not sort properly

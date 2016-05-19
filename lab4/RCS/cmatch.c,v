@@ -1,0 +1,311 @@
+head	1.9;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.9
+date	2014.02.10.17.58.19;	author vispatel;	state -;
+branches;
+next	1.8;
+
+1.8
+date	2014.02.10.17.57.18;	author vispatel;	state -;
+branches;
+next	1.7;
+
+1.7
+date	2014.02.10.17.56.06;	author vispatel;	state -;
+branches;
+next	1.6;
+
+1.6
+date	2014.02.09.23.30.40;	author vispatel;	state -;
+branches;
+next	1.5;
+
+1.5
+date	2014.02.09.20.12.08;	author vispatel;	state -;
+branches;
+next	1.4;
+
+1.4
+date	2014.02.09.08.59.44;	author vispatel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2014.02.07.18.33.25;	author vispatel;	state -;
+branches;
+next	1.2;
+
+1.2
+date	2014.02.07.18.05.39;	author vispatel;	state -;
+branches;
+next	1.1;
+
+1.1
+date	2014.02.07.17.53.50;	author vispatel;	state -;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@-
+@
+text
+@// $Id: cmatch.c,v 1.8 2014-02-10 09:57:18-08 vispatel - $
+// USER
+//    Viraj Patel (vispatel@@ucsc.edu)
+
+// NAME
+//    cmatch - print matching lines from files
+
+// SYNOPSIS
+//    cmatch [-iln] string [filename...]
+
+// DESCRIPTION
+// cmatch searches the named input ﬁles for lines
+// containing the string. By default the matching
+// lines are printed. If more than one ﬁle is
+// speciﬁed, lines of output are preceded by the
+// ﬁlename.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <libgen.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <errno.h>
+
+int exit_status = EXIT_SUCCESS;
+char *program_name = NULL;
+#define STDIN_NAME "-"
+
+typedef struct options {
+  bool ignore_case;
+  bool filenames_only;
+  bool number_lines;
+}options;
+
+void scan_options (int argc, char **argv, options *opts) {
+  opts->ignore_case = false;
+  opts->filenames_only = false;
+  opts->number_lines = false;
+  opterr = false;
+
+  for(;;) {
+    int opt = getopt (argc, argv, "ilm");
+    if (opt == -1) break;
+    switch (opt) {
+    case 'i':
+      opts->ignore_case = true;
+      break;
+    case 'l':
+      opts->filenames_only = true;
+      break;
+    case 'm':
+      opts->number_lines = true;
+      break;
+    default:
+      exit_status = EXIT_FAILURE;
+      fflush(NULL);
+      fprintf(stderr, "%s: -%c: invalid option\n",
+	      program_name, optopt);
+      break;
+    }
+  }
+}
+
+void match (FILE *input, char *filename, char *string) {
+  char buffer[1024];
+  printf("FILE %s:\n",filename);
+  for (int linenr = 1;; linenr++){
+    char *buf = fgets (buffer, sizeof buffer, input);
+    if (buf == NULL) break;
+    char *ret = strstr(buf, string);
+    printf ("Matched: %s\n", ret);
+  }
+}
+
+int main(int argc, char **argv) {
+  program_name = basename(argv[0]);
+  options opts;
+  char* string;
+  if(argc == 1){
+    match (stdin, STDIN_NAME, string);
+  }else {
+    for(int argi = 1; argi < argc; ++argi) {
+      char *filename  = argv[argi];
+      if (filename[0] == '-'){
+        scan_options(argc, argv, &opts);
+      }
+      else if(strcmp (filename, STDIN_NAME) == 0){
+        match (stdin, STDIN_NAME, string);
+      }else {
+        FILE *input = fopen (filename, "r");
+        char *string;
+        if(input != NULL) {
+          match (input, filename, string);
+          fclose (input);
+        }else {
+          exit_status = EXIT_FAILURE;
+          fflush(NULL);
+          fprintf (stderr, "%s: %s: %s\n", program_name,
+                   filename, strerror(errno));
+          fflush(NULL);
+        }
+      }
+    }
+  }
+  return exit_status;
+}
+@
+
+
+1.8
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.7 2014-02-10 09:56:06-08 vispatel - $
+d24 1
+a24 1
+
+@
+
+
+1.7
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.6 2014-02-09 15:30:40-08 vispatel - $
+d57 1
+a57 1
+      fflush(null);
+@
+
+
+1.6
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.5 2014-02-09 12:12:08-08 vispatel - $
+d27 2
+a28 1
+char *program_name = null;
+d32 1
+a32 1
+  bool filename_only;
+@
+
+
+1.5
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.4 2014/02/09 08:59:44 vispatel Exp $
+d64 9
+a72 2
+void catbyline (FILE *input, char *filename) {
+  
+d78 1
+d80 1
+a80 1
+    FILE *input = stdin;
+d83 6
+a88 3
+      char* options  = argv[argi];
+      if(options[0] == '-'){
+        FILE *input = stdin;
+d90 2
+a91 1
+        FILE *input = fopen (char* filename, "r");
+d93 1
+a93 1
+          //search through file
+d105 1
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.3 2014-02-07 10:33:25-08 vispatel - $
+d64 4
+d72 1
+a72 1
+    //use stdin as the filename
+d75 2
+a76 2
+      char* filename  = argv[argi];
+      if(filename[0] == '-'){
+d79 1
+a79 1
+        FILE *input = fopen (filename, "r");
+@
+
+
+1.3
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.2 2014-02-07 10:05:39-08 vispatel - $
+d73 1
+a73 1
+        scan_options(argc, argv, &opts);
+@
+
+
+1.2
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id: cmatch.c,v 1.1 2014-02-07 09:53:50-08 vispatel - $
+d66 23
+a88 1
+  
+@
+
+
+1.1
+log
+@-
+@
+text
+@d1 1
+a1 1
+// $Id$
+d21 4
+d27 37
+a63 1
+String word = "";
+@

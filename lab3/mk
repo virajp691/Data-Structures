@@ -1,0 +1,5 @@
+#!/bin/sh
+# $Id: mk,v 1.1 2014-01-27 09:58:15-08 vispatel - $
+# Name: Viraj Patel
+# User: vispatel@ucsc.edu
+gcc -g -O0 -Wall -Wextra -std=gnu99 crpn.c -o crpn

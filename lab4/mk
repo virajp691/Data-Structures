@@ -1,0 +1,4 @@
+#!/bin/sh
+# $Id: mk,v 1.1 2014-02-10 09:52:01-08 vispatel - $
+# NAME: Viraj Patel (vispatel@ucsc.edu)
+gcc -g -o0 -Wall -Wextra -std=gnu99 cmatch.c -o cmatch
